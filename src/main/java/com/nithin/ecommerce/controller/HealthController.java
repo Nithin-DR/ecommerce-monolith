@@ -20,4 +20,12 @@ public class HealthController {
 
     }
 
+    @GetMapping("/api/v1/greetings")
+    public String greetings() {
+
+        return "Welcome to Fight Club";
+
+
+    }
+
 }
