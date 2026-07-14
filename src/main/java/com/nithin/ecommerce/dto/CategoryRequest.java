@@ -17,12 +17,11 @@ public class CategoryRequest {
     private String description;
 
     public String getName() {
-        System.out.println("CategoryRequest");
         return name;
     }
 
     public void setName(String name) {
-        this.name = name;
+                this.name = name;
     }
 
     public String getDescription() {
