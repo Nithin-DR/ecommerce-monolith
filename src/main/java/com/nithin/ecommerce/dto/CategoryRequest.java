@@ -10,6 +10,7 @@ public class CategoryRequest {
     //Here all the validations annotations are take cared by Spring Validations.
     // By this we can Secure our API's if validation fails it throws error and won't reach the request to Controller.
     // Stop Exposing Entity class to Clients.
+    @NotBlank
     @Size(max = 100)
     private String name;
 
@@ -31,6 +32,7 @@ public class CategoryRequest {
     public void setDescription(String description) {
         this.description = description;
     }
+
 
 
 }
