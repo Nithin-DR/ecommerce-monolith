@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-@RestController
+@RestController // = @Controller+ @ResponseBody - so we don't need to explicitly write @ResponseBody while returning to JSON
 @RequestMapping("/api/v1/categories")// instead of writing the path to all the api's we write it in RequestMapping, so no need to repeat it again in all the API.
 public class CategoryController {
 

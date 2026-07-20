@@ -35,7 +35,8 @@ public class CategoryServiceImpl implements CategoryService {
         }
         // above we did validation first so before creating object or saving, doing validation is
         // the best practice if validation fails then no object creation CLEAN AND CLEAR and control exits!
-        Category category = new Category();
+
+         Category category = new Category();
 
         category.setName(categoryName);
         category.setDescription(request.getDescription().trim());
@@ -79,9 +80,7 @@ public class CategoryServiceImpl implements CategoryService {
 
         Category category =
                 categoryRepository.findById(id)
-                        .orElseThrow(
-                                () -> new CategoryNotFoundException("Category with id "+ id+ " not found.")
-                        );
+                                  .orElseThrow(() -> new CategoryNotFoundException("Category with id "+ id+ " not found."));
 
         CategoryResponse response = new CategoryResponse();
 
@@ -97,23 +96,11 @@ public class CategoryServiceImpl implements CategoryService {
 
         Category category =
                 categoryRepository.findById(id)
-                        .orElseThrow(
-                                () -> new CategoryNotFoundException(
-                                        "Category with id "
-                                                + id
-                                                + " not found."
-                                )
-                        );
+                                  .orElseThrow(() -> new CategoryNotFoundException("Category with id " + id + " not found."));
 
 
-        category.setName(
-                request.getName().trim().toUpperCase()
-        );
-
-        category.setDescription(
-                request.getDescription().trim()
-        );
-
+        category.setName(request.getName().trim().toUpperCase());
+        category.setDescription(request.getDescription().trim());
         category.setUpdatedAt(LocalDateTime.now());
 
 
@@ -133,13 +120,7 @@ public class CategoryServiceImpl implements CategoryService {
     public void deleteCategory(Long id) {
         Category category =
                 categoryRepository.findById(id)
-                        .orElseThrow(
-                                () -> new CategoryNotFoundException(
-                                        "Category with id "
-                                                + id
-                                                + " not found."
-                                )
-                        );
-        categoryRepository.deleteById(id);
+                                  .orElseThrow(() -> new CategoryNotFoundException("Category with id " + id + " not found."));
+                categoryRepository.deleteById(id);
     }
 }

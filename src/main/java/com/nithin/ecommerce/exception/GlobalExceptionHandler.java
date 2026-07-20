@@ -1,46 +1,49 @@
 package com.nithin.ecommerce.exception;
 
+import com.nithin.ecommerce.common.dto.ApiErrorResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.time.LocalDateTime;
-import java.util.Map;
 
 //cross-cutting concern
 @RestControllerAdvice // During Start UP Spring Scans it and registers it as a global exception handler.
 // It handles the exceptions from all the Controllers instead of writing try and catch we write it in one class and throw them
 public class GlobalExceptionHandler {
 
+    private ApiErrorResponse buildErrorResponse(HttpStatus status, String message, HttpServletRequest request){
+
+        ApiErrorResponse response =new ApiErrorResponse();
+
+        response.setTimestamp(LocalDateTime.now());
+        response.setStatus(status.value());
+        response.setMessage(message);
+        response.setError(status.getReasonPhrase());
+        response.setPath(request.getRequestURI());
+
+        return response;
+
+    }
+
+
     @ExceptionHandler(CategoryAlreadyExistsException.class) //  when this Exception occurs then execute this method.
     // here we use .class, the class which is derived for exception.
-    public ResponseEntity<Map<String, Object>> handleCategoryAlreadyExists(
-            CategoryAlreadyExistsException ex) {
-
-        Map<String, Object> response = Map.of(
-                "timestamp", LocalDateTime.now(),
-                "status", HttpStatus.CONFLICT.value(),
-                "message", ex.getMessage()
-        );
+    public ResponseEntity<ApiErrorResponse> handleCategoryAlreadyExists(
+            CategoryAlreadyExistsException ex, HttpServletRequest request) {
 
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
-                .body(response);
+                .body(buildErrorResponse(HttpStatus.CONFLICT,ex.getMessage(), request));
     }
 
     @ExceptionHandler(CategoryNotFoundException.class)
-    public ResponseEntity<Map<String, Object>>  handleCategoryNotFound(CategoryNotFoundException ex){
-        Map<String, Object> response = Map.of(
-                "timestamp", LocalDateTime.now(),
-                "status", HttpStatus.NOT_FOUND.value(),
-                "message", ex.getMessage()
-
-        );
-
+    public ResponseEntity<ApiErrorResponse> handleCategoryNotFound(CategoryNotFoundException ex, HttpServletRequest request){
 
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
-                .body(response);
+                .body(buildErrorResponse(HttpStatus.NOT_FOUND,ex.getMessage(), request));
     }
 
 

@@ -10,15 +10,18 @@ public class CategoryRequest {
     //Here all the validations annotations are take cared by Spring Validations.
     // By this we can Secure our API's if validation fails it throws error and won't reach the request to Controller.
     // Stop Exposing Entity class to Clients.
-    @NotBlank
-    @Size(max = 100)
+    @NotBlank(message = "Category name is required.")
+    @Size(max = 100,message = "Category name cannot exceed 100 characters.")
     private String name;
 
-    @Size(max = 500)
+    //Annotations are instructions
+    // For this validation annotation, The Spring MVC reads and delegates it to Hibernate Validator, Spring MVC itself doesn't validate.
+    // (Just like delegating @RequestBody to Jackson: To  deserialize JSON to Java Objects)
+    @Size(max = 500, message = "Description cannot exceed 500 characters.")
     private String description;
 
     public String getName() {
-        return name;
+               return name;
     }
 
     public void setName(String name) {
