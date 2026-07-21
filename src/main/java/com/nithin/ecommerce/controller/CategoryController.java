@@ -23,9 +23,7 @@ public class CategoryController {
     @PostMapping
    // @ResponseStatus(HttpStatus.CREATED) -- can write like this, when no ResponseEntity
     public ResponseEntity<CategoryResponse> createCategory(@Valid @RequestBody CategoryRequest request) {
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(categoryService.createCategory(request));
+        return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.createCategory(request));
 
     }
 

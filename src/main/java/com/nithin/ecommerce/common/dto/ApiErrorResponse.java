@@ -1,6 +1,7 @@
 package com.nithin.ecommerce.common.dto;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 public class ApiErrorResponse {
 
@@ -9,6 +10,8 @@ public class ApiErrorResponse {
     private String error;
     private String message;
     private String path;
+
+    private Map<String, String> errors;
 
     public LocalDateTime  getTimestamp() {
         return timestamp;
@@ -50,12 +53,21 @@ public class ApiErrorResponse {
         this.path = path;
     }
 
+    public Map<String, String> getErrors() {
+        return errors;
+    }
+
+    public void setErrors(Map<String, String> errors) {
+        this.errors = errors;
+    }
+
     public ApiErrorResponse(LocalDateTime  timestamp, Integer status, String error, String message, String path) {
         this.timestamp = timestamp;
         this.status = status;
         this.error = error;
         this.message = message;
         this.path = path;
+
     }
 
     public ApiErrorResponse(){
