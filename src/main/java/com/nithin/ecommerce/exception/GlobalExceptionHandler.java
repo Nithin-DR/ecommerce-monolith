@@ -79,5 +79,15 @@ public class GlobalExceptionHandler {
                 .body(response);
     }
 
+    @ExceptionHandler(ProductAlreadyExistsException.class)
+    public ResponseEntity<ApiErrorResponse> handleProductAlreadyExists(
+            ProductAlreadyExistsException ex, HttpServletRequest request) {
+
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(buildErrorResponse(HttpStatus.CONFLICT,ex.getMessage(), request));
+
+    }
+
 
 }
